@@ -55,7 +55,7 @@ namespace Benjathemaker
                 float t = Mathf.PingPong(floatTimer, 1f);
                 if (useEasingForFloating) t = EaseInOutQuad(t);
 
-                transform.position = initialPosition + new Vector3(0, t * floatHeight, 0);
+                //transform.position = initialPosition + new Vector3(0, t * floatHeight, 0);
             }
 
             if (isScaling)

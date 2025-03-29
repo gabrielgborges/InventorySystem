@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MLB.Inventory
 {
-    public class ItemBase : MonoBehaviour
+    public class ItemBase
     {
         protected ItemData _data;
         protected string ID;
@@ -12,6 +12,8 @@ namespace MLB.Inventory
             _data = data;
             ID = id;
         }
+        
+        protected virtual void Setup(){}
     }
 }
 

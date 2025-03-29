@@ -1,12 +1,23 @@
+using UnityEngine;
+
 namespace MLB.Inventory
 {
     public class TreasureItem : ItemBase
     {
         private int _value;
-        
-        public TreasureItem(ItemData data,string id, int value) : base(data, id)
+        private readonly int _minValue = 0;
+        private readonly int _maxValue = 100;
+
+        public int Value => _value;
+
+        public TreasureItem(ItemData data,string id) : base(data, id)
         {
-            _value = value;
+           Setup();
+        }
+
+        protected override void Setup()
+        {
+            _value = Random.Range(_minValue, _maxValue);
         }
     }
 }

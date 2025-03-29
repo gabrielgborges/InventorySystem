@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b08ec365500bb499dd43beac7ee33f, type: 3}
   m_Name: Treasure2
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 6954758372675618198, guid: 6a301d09debaf1e4a8d3e2657cc44a96, type: 3}
-  ID: 
-  Name: coin
+  Prefab: {fileID: 796168238853407404, guid: 71174e146d203be4697ae69df283967b, type: 3}
+  Name: gold
   ItemType: 2
-  Weight: 2
+  Weight: 4
