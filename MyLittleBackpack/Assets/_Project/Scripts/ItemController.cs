@@ -1,7 +1,7 @@
 using MLB.Inventory;
 using UnityEngine;
 
-public class ItemController : MonoBehaviour, ISelectableItem
+public sealed class ItemController : MonoBehaviour, ISelectableItem
 {
     private ItemBase _itemData;
     
@@ -26,12 +26,12 @@ public class ItemController : MonoBehaviour, ISelectableItem
     {
         _physicsComponent.StopMovement();
         transform.position = position;
-        Debug.Log("Dragging");
     }
 
-    public void Deselect()
+    public GameObject Deselect()
     {
         transform.rotation = Quaternion.identity;
         _physicsComponent.MoveForward();
+        return gameObject;
     }
 }

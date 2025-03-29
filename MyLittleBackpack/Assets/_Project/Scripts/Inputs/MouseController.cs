@@ -20,13 +20,17 @@ public class MouseController : MonoBehaviour
     PlayerController _inputMap;
     private ISelectableItem _selectedItem;
     private bool _isDragging;
+    private IEventService _eventService;
     
-    private void Awake()
+    private async void Awake()
     {
         _inputMap = new PlayerController();
         _inputMap.Player.Enable();
         _inputMap.Player.SelectItem.performed += SelectItem;
         _inputMap.Player.SelectItem.canceled += StopSelection;
+
+        _eventService = await ServiceLocator.GetService<IEventService>();
+        gameObject.SetActive(false);
     }
 
     private void SelectItem(InputAction.CallbackContext obj)
@@ -35,6 +39,7 @@ public class MouseController : MonoBehaviour
         {
             _selectedItem.Select();
             _isDragging = true;
+            _eventService.TryInvokeEvent(new OnDragItemEvent());
         }
     }
     
@@ -43,9 +48,10 @@ public class MouseController : MonoBehaviour
         _isDragging = false;
         if (_selectedItem != null)
         {
-            _selectedItem.Deselect();
+            GameObject droppedObject = _selectedItem.Deselect();
+            _eventService.TryInvokeEvent(new OnDropItemEvent(droppedObject));
+            _selectedItem = null;
         }
-        Debug.LogWarning("UUUUU");
     }
     
     private Vector3 GetWorldPositionAtHeight(Ray ray, float heightY)
