@@ -1,0 +1,45 @@
+{
+    "name": "PlayerInputMap",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "362782a4-91bb-4e63-9a7a-3e5bae8cdf00",
+            "actions": [
+                {
+                    "name": "SelectItem",
+                    "type": "Button",
+                    "id": "9e489aa6-e237-42dc-b457-1bb9aca4d5de",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dd6084ea-8db5-4b95-b44b-4981b2e5d01c",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "79001d6a-50d8-4905-9bb2-e875f18534ef",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
