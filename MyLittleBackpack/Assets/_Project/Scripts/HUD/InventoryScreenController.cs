@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using MLB.Inventory.Items;
 using UnityEngine;
 using UnityEngine.Serialization;
 

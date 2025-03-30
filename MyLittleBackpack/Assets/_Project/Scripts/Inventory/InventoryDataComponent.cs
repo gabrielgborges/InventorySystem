@@ -33,12 +33,27 @@ public class InventoryDataComponent : MonoBehaviour
     {
         if (FittedInAvailableSlot())
         {
+            ConfirmAddingItem();
             SetPreparedItem(null);
             return true;
         }
         
         SetPreparedItem(null);
         return false;
+    }
+
+    public void RemoveItem(ItemData item)
+    {
+        for (var index = 0; index < CurrentItemSlots.Count; index++)
+        {
+            var itemSlot = CurrentItemSlots[index];
+            if (itemSlot.ItemData == item)
+            {
+                _currentItemSlots[index] = new ItemSlot(null, itemSlot.EmptySprite,
+                    itemSlot.EmptySprite, itemSlot.ItemType);
+                return;
+            }
+        }
     }
 
     private bool FittedInAvailableSlot()
@@ -54,6 +69,12 @@ public class InventoryDataComponent : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    private async void ConfirmAddingItem()
+    {
+        IEventService eventService = await ServiceLocator.GetService<IEventService>();
+        eventService.TryInvokeEvent(new OnAddItemEvent(_arrivedItem));  
     }
 }
 

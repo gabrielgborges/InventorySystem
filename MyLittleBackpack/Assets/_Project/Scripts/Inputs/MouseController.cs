@@ -71,20 +71,18 @@ public class MouseController : MonoBehaviour
         
         if (Cursor.lockState == CursorLockMode.Locked)
         {
-            //cursorRay.direction = _mainCamera.transform.forward;//cameraController.transform.forward;
-            cursorRay.origin = _mainCamera.transform.position + _mainCamera.nearClipPlane * _mainCamera.transform.forward;//cameraController.transform.position + _mainCamera.nearClipPlane * cameraController.transform.forward;
+            return;
         }
         
         RaycastHit hitInfo;
 
-        bool tryRaycast = Physics.Raycast(cursorRay, out hitInfo, _clickDistance, _grabLayers, QueryTriggerInteraction.Ignore);//cameraController.cameraZoom, grappleLayers, QueryTriggerInteraction.Ignore);
+        bool tryRaycast = Physics.Raycast(cursorRay, out hitInfo, _clickDistance, _grabLayers, QueryTriggerInteraction.Collide);//cameraController.cameraZoom, grappleLayers, QueryTriggerInteraction.Ignore);
         if (tryRaycast)
         {
            if(hitInfo.collider.gameObject.TryGetComponent(out ISelectableItem selectableItem))
            {
                _selectedItem = selectableItem;
                _selectedItem.Hover();
-               Debug.LogWarning("Selected");
            }
         }
         else

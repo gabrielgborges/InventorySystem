@@ -10,7 +10,7 @@ namespace MLB.Inventory.Items
 
         public int Value => _value;
 
-        public TreasureItem(ItemData data,string id) : base(data, id)
+        public TreasureItem(ItemData data, string id) : base(data, id)
         {
            Setup();
         }

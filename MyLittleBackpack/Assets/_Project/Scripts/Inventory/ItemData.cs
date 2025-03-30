@@ -10,5 +10,6 @@ namespace MLB.Inventory.Items
         public string Name;
         public ItemType ItemType;
         public int Weight;
+        public string ID;
     }
 }
