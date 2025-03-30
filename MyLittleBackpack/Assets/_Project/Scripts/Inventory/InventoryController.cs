@@ -43,6 +43,7 @@ public class InventoryController : MonoBehaviour, ISelectableItem
     private async void Initialize()
     {
         _physicsComponent.OnItemArrived = _dataComponent.SetPreparedItem;
+        _physicsComponent.OnItemRemoved = _dataComponent.RemovePreparedItem;
         
         _screenService = await ServiceLocator.GetService<IScreenService>();
         _eventService = await ServiceLocator.GetService<IEventService>();
@@ -65,7 +66,7 @@ public class InventoryController : MonoBehaviour, ISelectableItem
         {
             TryAddItemToInventory(obj.Item);
         }
-        else if (_inventoryIsOpened)
+        if (_inventoryIsOpened)
         {
             _inventoryScreen.Close();
             _inventoryScreen = null;

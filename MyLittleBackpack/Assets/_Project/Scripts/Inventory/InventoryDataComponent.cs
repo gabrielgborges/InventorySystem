@@ -29,6 +29,11 @@ public class InventoryDataComponent : MonoBehaviour
         _arrivedItem = item != null ? item.ItemData : null;
     }
 
+    public void RemovePreparedItem()
+    {
+        _arrivedItem = null;
+    }
+
     public bool AddPreparedItem()
     {
         if (FittedInAvailableSlot())
@@ -67,7 +72,6 @@ public class InventoryDataComponent : MonoBehaviour
                 _startData.GetSprite(_arrivedItem.ItemType), _currentItemSlots[index].ItemType);
             
             _currentItemSlots[index] = updatedSlot;
-            Debug.Log("Fitted in index : " + index);
             return true;
         }
         return false;
