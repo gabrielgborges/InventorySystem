@@ -31,8 +31,15 @@ public class InventoryController : MonoBehaviour
     {
         if (_dataComponent.HoldingItem)
         {
-            _dataComponent.AddPreparedItem();
-            Destroy(obj.Item);
+            bool inventoryIsNotFull = _dataComponent.AddPreparedItem();
+            if (inventoryIsNotFull)
+            {
+                Destroy(obj.Item);
+            }
+            else
+            {
+                obj.Item.GetComponent<Transform>().position += (Vector3.right + Vector3.up) * 2;
+            }
         }
     }
 }
