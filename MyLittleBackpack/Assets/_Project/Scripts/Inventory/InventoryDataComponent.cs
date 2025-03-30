@@ -42,7 +42,7 @@ public class InventoryDataComponent : MonoBehaviour
         return false;
     }
 
-    public void RemoveItem(ItemData item)
+    public bool RemoveItem(ItemData item)
     {
         for (var index = 0; index < CurrentItemSlots.Count; index++)
         {
@@ -51,9 +51,11 @@ public class InventoryDataComponent : MonoBehaviour
             {
                 _currentItemSlots[index] = new ItemSlot(null, itemSlot.EmptySprite,
                     itemSlot.EmptySprite, itemSlot.ItemType);
-                return;
+                return true;
             }
         }
+
+        return false;
     }
 
     private bool FittedInAvailableSlot()

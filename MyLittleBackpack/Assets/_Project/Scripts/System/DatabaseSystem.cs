@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
 
 public class DatabaseSystem : MonoBehaviour
@@ -10,23 +11,12 @@ public class DatabaseSystem : MonoBehaviour
     
     private readonly string _serverAddress = "https://wadahub.manerai.com/api/inventory/status";
     private readonly string _authKey = "kPERnYcWAY46xaSy8CEzanosAgsWM84Nx7SKM4QBSqPq6c7StWfGxzhxPfDh8MaP";
-    
-    [Serializable]
-    internal struct InventoryRequestData
-    {
-        public string item_id;
-        public InventoryRequestType request;
-    }
 
-    [Serializable]
-    internal struct InventoryResponse
-    {
-        public string response;
-        public string status;
-        public InventoryRequestData data_submitted;
-    }
+    private UnityEvent<InventoryResponse> OnInventoryRequestFinished; //Could be used by other classes, specially if 
+    //DatabaseSystem were a Service (like ScreenService), but since in this specificproject the EventService is already being
+    //used for the same purposes, I personally do not find a benefit on using it outside this script.
     
-    void Start()
+    private void Start()
     {
         Initialize();
     }
@@ -69,8 +59,7 @@ public class DatabaseSystem : MonoBehaviour
             StartCoroutine(SendInventoryRequest(data));
         }
     }
-
-
+    
     private IEnumerator SendInventoryRequest(InventoryRequestData requestData)
     {
         string jsonData = JsonUtility.ToJson(requestData);
@@ -85,10 +74,12 @@ public class DatabaseSystem : MonoBehaviour
 
         yield return request.SendWebRequest();
 
+        
         if (request.result == UnityWebRequest.Result.Success)
         {
             string jsonResponse = request.downloadHandler.text;
             InventoryResponse response = JsonUtility.FromJson<InventoryResponse>(jsonResponse);
+            OnInventoryRequestFinished?.Invoke(response);
             Debug.Log($"Status: {response.status}, Item Sent: {response.data_submitted.item_id}, Qty: {response.data_submitted.request.ToString()}");
         }
         else
@@ -96,11 +87,27 @@ public class DatabaseSystem : MonoBehaviour
             Debug.LogError("Error sending request: " + request.error);
         }
     }
+    
 }
-public enum InventoryRequestType
+internal enum InventoryRequestType
 {
     SET = 0,
     GET = 1,
     DELETE = 2,
     POST = 3
+}
+
+[Serializable]
+internal struct InventoryRequestData
+{
+    public string item_id;
+    public InventoryRequestType request;
+}
+
+[Serializable]
+internal struct InventoryResponse
+{
+    public string response;
+    public string status;
+    public InventoryRequestData data_submitted;
 }

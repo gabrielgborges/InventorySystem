@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05b08ec365500bb499dd43beac7ee33f, type: 3}
-  m_Name: Treasure2
+  m_Name: Consumable3
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 7148735918369365977, guid: b7c148fc8b2bee74fb9631ee79af03b8, type: 3}
-  Sprite: {fileID: 21300000, guid: 17835dda3e629403da7fe2bea0530f0d, type: 3}
-  Name: special_coin
-  ItemType: 3
-  Weight: 4
-  ID: 2b15fcb0-98a6-40cd-a2bf-42825bb759f3
+  Prefab: {fileID: 5934176368795031359, guid: 89352984d1f9746438c7472cd61011f4, type: 3}
+  Sprite: {fileID: 21300000, guid: bf95fd13270604a649fb6cc1654c1a20, type: 3}
+  Name: red_potion
+  ItemType: 1
+  Weight: 8
+  ID: 

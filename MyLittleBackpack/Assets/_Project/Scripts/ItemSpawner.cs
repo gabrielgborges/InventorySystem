@@ -26,6 +26,14 @@ public class ItemSpawner : MonoBehaviour
                 TreasureItem treasureItem = new TreasureItem(randomizedItem, Guid.NewGuid().ToString());
                 itemController.Setup(treasureItem);
                 break;
+            case ItemType.COMBAT:
+                CombatItem combatItem = new CombatItem(randomizedItem, Guid.NewGuid().ToString());
+                itemController.Setup(combatItem);
+                break;
+            case ItemType.CONSUMABLE:
+                ConsumableItem consumableItem = new ConsumableItem(randomizedItem, Guid.NewGuid().ToString());
+                itemController.Setup(consumableItem);
+                break;
             default:
                 Debug.LogWarning("Item type not supported");
                 break;

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05b08ec365500bb499dd43beac7ee33f, type: 3}
-  m_Name: Treasure2
+  m_Name: Weapon3
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 7148735918369365977, guid: b7c148fc8b2bee74fb9631ee79af03b8, type: 3}
-  Sprite: {fileID: 21300000, guid: 17835dda3e629403da7fe2bea0530f0d, type: 3}
-  Name: special_coin
-  ItemType: 3
+  Prefab: {fileID: 8023910558234654672, guid: 7f5a1edf789f94c4c8f3daa84ab77f98, type: 3}
+  Sprite: {fileID: 21300000, guid: b2fc57aa0298c4775b606cabbda1114b, type: 3}
+  Name: bomb
+  ItemType: 2
   Weight: 4
-  ID: 2b15fcb0-98a6-40cd-a2bf-42825bb759f3
+  ID: 

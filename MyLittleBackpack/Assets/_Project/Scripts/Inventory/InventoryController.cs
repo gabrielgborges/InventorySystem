@@ -53,8 +53,10 @@ public class InventoryController : MonoBehaviour, ISelectableItem
 
     private void RemoveItemHandler(OnRemoveInventoryItemEvent obj)
     {
-        _dataComponent.RemoveItem(obj.Item.ItemData);
-        _spawner.Spawn(obj.Item.ItemData);
+        if (_dataComponent.RemoveItem(obj.Item.ItemData))
+        {
+            _spawner.Spawn(obj.Item.ItemData);
+        }
     }
 
     private void OnDropItemHandler(OnDropItemEvent obj)
@@ -66,6 +68,7 @@ public class InventoryController : MonoBehaviour, ISelectableItem
         else if (_inventoryIsOpened)
         {
             _inventoryScreen.Close();
+            _inventoryScreen = null;
         }
     }
 

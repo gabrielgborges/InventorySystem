@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ConsumableItem : MonoBehaviour
+namespace MLB.Inventory.Items
 {
-    // Start is called before the first frame update
-    void Start()
+public class ConsumableItem : ItemBase
+{
+    private int _amount;
+    private readonly int _minAmount = 0;
+    private readonly int _maxAmount = 100;
+
+    public int Amount => _amount;
+
+    public ConsumableItem(ItemData data, string id) : base(data, id)
     {
-        
+        Setup();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Setup()
     {
-        
+        _amount = Random.Range(_minAmount, _maxAmount);
     }
+}
 }
