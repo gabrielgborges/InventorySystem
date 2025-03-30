@@ -19,4 +19,4 @@ MonoBehaviour:
   - ItemType: 2
     ItemImage: {fileID: 21300000, guid: 01bce18de632c47439ae67c1ca187300, type: 3}
   - ItemType: 3
-    ItemImage: {fileID: 21300000, guid: 01bce18de632c47439ae67c1ca187300, type: 3}
+    ItemImage: {fileID: 21300000, guid: b6437d666f988427d8fdf6a46f9de4ad, type: 3}

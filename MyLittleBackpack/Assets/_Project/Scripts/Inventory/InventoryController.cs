@@ -5,8 +5,11 @@ public class InventoryController : MonoBehaviour, ISelectableItem
     [SerializeField] private InventoryPhysicsComponent _physicsComponent;
     [SerializeField] private InventoryDataComponent _dataComponent;
 
+    private ScreenControllerBase _inventoryScreen;
     private IEventService _eventService;
     private IScreenService _screenService;
+    
+    private bool _inventoryIsOpened => _inventoryScreen != null;
 
     private void Start()
     {
@@ -33,44 +36,48 @@ public class InventoryController : MonoBehaviour, ISelectableItem
     {
         if (_dataComponent.HoldingItem)
         {
-            bool inventoryIsNotFull = _dataComponent.AddPreparedItem();
-            if (inventoryIsNotFull)
-            {
-                Destroy(obj.Item);
-            }
-            else
-            {
-                obj.Item.GetComponent<Transform>().position += (Vector3.right + Vector3.up) * 2;
-            }
+            TryAddItemToInventory(obj.Item);
+        }
+        else if (_inventoryIsOpened)
+        {
+            _inventoryScreen.Close();
         }
     }
 
+    private void TryAddItemToInventory(GameObject item )
+    {
+        bool inventoryIsNotFull = _dataComponent.AddPreparedItem();
+        if (inventoryIsNotFull)
+        {
+            Destroy(item);
+        }
+        else
+        {
+            item.GetComponent<Transform>().position += (Vector3.right + Vector3.up) * 2;
+        }
+    }
+    
     public void Hover()
     {
-        Debug.Log("1");
-
     }
 
     public void Select()
     {
-        Debug.Log("2");
         _screenService.LoadScreen<InventoryScreenController>(GameScreen.INVENTORY, HandleInventoryScreenOpened);
     }
 
     public void OnDrag(Vector3 position)
     {
-        Debug.Log("3");
     }
 
     public GameObject Deselect()
     {
-        Debug.Log("4");
-
         return null;
     }
     
     private void HandleInventoryScreenOpened(InventoryScreenController screen)
     {
         screen.SetupInventory(_dataComponent.CurrentItemSlots);
+        _inventoryScreen = screen;
     } 
 }

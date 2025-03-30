@@ -1,21 +1,25 @@
 using System.Collections.Generic;
 using MLB.Inventory.Items;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class InventoryScreenController : ScreenControllerBase
 {
-    [SerializeField] List<InventorySlotUIComponent> slots = new List<InventorySlotUIComponent>();
+    [FormerlySerializedAs("slots")] [SerializeField] List<InventorySlotUIComponent> _initialSlots = new List<InventorySlotUIComponent>();
     
     public void SetupInventory(List<ItemSlot> items)
     {
-        for (int i = 0; i < slots.Count; i++)
+        for (int i = 0; i < _initialSlots.Count; i++)
         {
-            if (i < items.Count)
+            bool itemsRemaining = i < items.Count;
+            if (itemsRemaining)
             {
-                slots[i].Setup(items[i]);
+                _initialSlots[i].Setup(items[i]);
                 continue;
             }
-            slots[i].gameObject.SetActive(false);
+            _initialSlots[i].gameObject.SetActive(false);
         }
     }
+    
+    
 }

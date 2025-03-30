@@ -1,24 +1,34 @@
-using MLB.Inventory.Items;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlotUIComponent : MonoBehaviour, IPointerUpHandler
+public class InventorySlotUIComponent : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 {
    [SerializeField] private Image _icon;
    [SerializeField] private Image _background;
    
    private ItemSlot _item;
+   private IEventService _eventService;
 
-   public void Setup(ItemSlot item)
+   public async void Setup(ItemSlot item)
    {
       _item = item;
       _icon.sprite = item.CurrentSprite;
+      _eventService = await ServiceLocator.GetService<IEventService>();
    }
 
-   public async void OnPointerUp(PointerEventData eventData)
+   private void HandleOnDropItem(OnDropItemEvent obj)
    {
-      IEventService eventService = await ServiceLocator.GetService<IEventService>();
-      eventService.TryInvokeEvent(new OnSelectItemSlotEvent(_item));
+      _eventService.TryInvokeEvent(new OnRemoveInventoryItemEvent(_item));
+   }
+
+   public void OnPointerEnter(PointerEventData eventData)
+   {
+      _eventService.AddListener<OnDropItemEvent>(HandleOnDropItem, GetHashCode());
+   }
+
+   public void OnPointerExit(PointerEventData eventData)
+   {
+      _eventService.RemoveListener<OnDropItemEvent>(GetHashCode());
    }
 }
