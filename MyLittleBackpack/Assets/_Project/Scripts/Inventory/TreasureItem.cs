@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MLB.Inventory
+namespace MLB.Inventory.Items
 {
     public class TreasureItem : ItemBase
     {

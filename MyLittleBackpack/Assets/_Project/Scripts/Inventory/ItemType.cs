@@ -2,8 +2,9 @@ namespace MLB.Inventory
 {
     public enum ItemType
     {
-        CONSUMABLE = 0,
-        COMBAT = 1,
-        TREASURE = 2,
+        NONE = 0,
+        CONSUMABLE = 1,
+        COMBAT = 2,
+        TREASURE = 3,
     }
 }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Treasure1
   m_EditorClassIdentifier: 
   Prefab: {fileID: 6954758372675618198, guid: affdc906a53e28642b507e605fefefeb, type: 3}
+  Sprite: {fileID: 21300000, guid: bf0f3dd8ea8cc40169b0c14a5494aa55, type: 3}
   Name: coin
-  ItemType: 2
+  ItemType: 3
   Weight: 2

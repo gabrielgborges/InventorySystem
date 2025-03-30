@@ -1,37 +1,41 @@
-using MLB.Inventory;
 using UnityEngine;
 
-public sealed class ItemController : MonoBehaviour, ISelectableItem
+namespace MLB.Inventory.Items
 {
-    private ItemBase _itemData;
-    
-    [SerializeField] private ItemPhysicsComponent _physicsComponent;
-    
-    public void Setup<T>(T data) where T : ItemBase
+    public sealed class ItemController : MonoBehaviour, ISelectableItem, IStoreableItem
     {
-        _itemData = data;
-        _physicsComponent.MoveForward();
-    }
-
-    public void Hover()
-    {
-    }
-
-    public void Select()
-    {
+        [SerializeField] private ItemPhysicsComponent _physicsComponent;
         
-    }
+        private ItemBase _itemData;
+        
+        public ItemData ItemData => _itemData.Data;
 
-    public void OnDrag(Vector3 position)
-    {
-        _physicsComponent.StopMovement();
-        transform.position = position;
-    }
+        public void Setup<T>(T data) where T : ItemBase
+        {
+            _itemData = data;
+            _physicsComponent.MoveForward();
+        }
 
-    public GameObject Deselect()
-    {
-        transform.rotation = Quaternion.identity;
-        _physicsComponent.MoveForward();
-        return gameObject;
+        public void Hover()
+        {
+        }
+
+        public void Select()
+        {
+        
+        }
+
+        public void OnDrag(Vector3 position)
+        {
+            _physicsComponent.StopMovement();
+            transform.position = position;
+        }
+
+        public GameObject Deselect()
+        {
+            transform.rotation = Quaternion.identity;
+            _physicsComponent.MoveForward();
+            return gameObject;
+        }
     }
 }

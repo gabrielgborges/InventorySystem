@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using MLB.Inventory;
+using MLB.Inventory.Items;
 using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour
