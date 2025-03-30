@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class InventoryController : MonoBehaviour
+public class InventoryController : MonoBehaviour, ISelectableItem
 {
     [SerializeField] private InventoryPhysicsComponent _physicsComponent;
     [SerializeField] private InventoryDataComponent _dataComponent;
 
     private IEventService _eventService;
-    
+    private IScreenService _screenService;
+
     private void Start()
     {
         Initialize();
@@ -16,6 +17,7 @@ public class InventoryController : MonoBehaviour
     {
         _physicsComponent.OnItemArrived = _dataComponent.SetPreparedItem;
         
+        _screenService = await ServiceLocator.GetService<IScreenService>();
         _eventService = await ServiceLocator.GetService<IEventService>();
         _eventService.AddListener<OnDropItemEvent>(OnDropItemHandler, GetHashCode());
         
@@ -42,4 +44,33 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
+
+    public void Hover()
+    {
+        Debug.Log("1");
+
+    }
+
+    public void Select()
+    {
+        Debug.Log("2");
+        _screenService.LoadScreen<InventoryScreenController>(GameScreen.INVENTORY, HandleInventoryScreenOpened);
+    }
+
+    public void OnDrag(Vector3 position)
+    {
+        Debug.Log("3");
+    }
+
+    public GameObject Deselect()
+    {
+        Debug.Log("4");
+
+        return null;
+    }
+    
+    private void HandleInventoryScreenOpened(InventoryScreenController screen)
+    {
+        screen.SetupInventory(_dataComponent.CurrentItemSlots);
+    } 
 }

@@ -12,6 +12,8 @@ public class InventoryDataComponent : MonoBehaviour
     private List<ItemSlot> _currentItemSlots = new List<ItemSlot>();
 
     public bool HoldingItem => _arrivedItem != null;
+
+    public List<ItemSlot> CurrentItemSlots => _currentItemSlots;
     
     public void Initialize()
     {

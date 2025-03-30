@@ -1,17 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class MouseController : MonoBehaviour
 {
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private float _clickDistance = 300;
-    [Tooltip("Precision of search for nearest surface to grapple on to. At least 8. Higher is more precise at the expense of computational cost.")]
-    [SerializeField]
-    [Range(0, 32)]
-    int assistIterations = 12;
+    [FormerlySerializedAs("grappleLayers")]
     [Tooltip("GameObject layers that the player can grapple onto.")]
     [SerializeField]
-    LayerMask grappleLayers;
+    LayerMask _grabLayers;
     [SerializeField] private int _dragHeight = 2;
     
     PlayerController _inputMap;
@@ -59,7 +57,6 @@ public class MouseController : MonoBehaviour
     void FixedUpdate() {
         // Read mouse position on screen.
         Vector3 cursorPosition = Mouse.current.position.ReadValue();//_cameraAimAction.ReadValue<Vector2>();
-        //cursorPosition.z = _mainCamera.nearClipPlane;
 
         // Evaluate ray for casting in world space.
         Ray cursorRay = _mainCamera.ScreenPointToRay(cursorPosition);
@@ -71,24 +68,16 @@ public class MouseController : MonoBehaviour
             _selectedItem.OnDrag(draggingPosition);
             return;
         }
-        Debug.DrawRay(cursorRay.origin, cursorRay.direction * _clickDistance, Color.red);
-
         
         if (Cursor.lockState == CursorLockMode.Locked)
         {
             //cursorRay.direction = _mainCamera.transform.forward;//cameraController.transform.forward;
             cursorRay.origin = _mainCamera.transform.position + _mainCamera.nearClipPlane * _mainCamera.transform.forward;//cameraController.transform.position + _mainCamera.nearClipPlane * cameraController.transform.forward;
         }
-        Debug.DrawRay(cursorRay.origin, cursorRay.direction * _clickDistance, Color.red);
-
-        // Check if there is any surface to grapple on to around the cursor.
+        
         RaycastHit hitInfo;
-        // Cast a ray from the camera based on cursor position.
-        // Only detect game objects on layers that are grapple-able. Ignore non-colliding triggers.
-        // The ray distance adds the player's grapple distance and the zoom distance which will
-        // guarantee the ray will be longer than or equal to the player's grapple distance. We can
-        // filter anything beyond after.
-        bool tryRaycast = Physics.Raycast(cursorRay, out hitInfo, _clickDistance, grappleLayers, QueryTriggerInteraction.Ignore);//cameraController.cameraZoom, grappleLayers, QueryTriggerInteraction.Ignore);
+
+        bool tryRaycast = Physics.Raycast(cursorRay, out hitInfo, _clickDistance, _grabLayers, QueryTriggerInteraction.Ignore);//cameraController.cameraZoom, grappleLayers, QueryTriggerInteraction.Ignore);
         if (tryRaycast)
         {
            if(hitInfo.collider.gameObject.TryGetComponent(out ISelectableItem selectableItem))
@@ -97,6 +86,10 @@ public class MouseController : MonoBehaviour
                _selectedItem.Hover();
                Debug.LogWarning("Selected");
            }
+        }
+        else
+        {
+            _selectedItem = null;
         }
     }
 }
